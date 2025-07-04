@@ -1,50 +1,96 @@
-# template-for-proposals
+# Proposal Import Bytes
 
-A repository template for ECMAScript proposals.
+Champions: Steven ([@styfle](https://github.com/styfle))
 
-## Before creating a proposal
+Status: Stage 0.
 
-Please ensure the following:
-  1. You have read the [process document](https://tc39.github.io/process-document/)
-  1. You have reviewed the [existing proposals](https://github.com/tc39/proposals/)
-  1. You are aware that your proposal requires being a member of TC39, or locating a TC39 delegate to “champion” your proposal
+Please leave any feedback you have in the [issues](https://github.com/styfle/proposal-import-bytes/issues)!
 
-## Create your proposal repo
+## Synopsis
 
-Follow these steps:
-  1. Click the green [“use this template”](https://github.com/tc39/template-for-proposals/generate) button in the repo header. (Note: Do not fork this repo in GitHub's web interface, as that will later prevent transfer into the TC39 organization)
-  1. Update ecmarkup and the biblio to the latest version: `npm install --save-dev ecmarkup@latest && npm install --save-dev --save-exact @tc39/ecma262-biblio@latest`.
-  1. Go to your repo settings page:
-      1. Under “General”, under “Features”, ensure “Issues” is checked, and disable “Wiki”, and “Projects” (unless you intend to use Projects)
-      1. Under “Pull Requests”, check “Always suggest updating pull request branches” and “automatically delete head branches”
-      1. Under the “Pages” section on the left sidebar, and set the source to “deploy from a branch”, select “gh-pages” in the branch dropdown, and then ensure that “Enforce HTTPS” is checked.
-      1. Under the “Actions” section on the left sidebar, under “General”, select “Read and write permissions” under “Workflow permissions” and click “Save”
-  1. [“How to write a good explainer”][explainer] explains how to make a good first impression.
+This proposal is buit on top of the the [import attributes proposal](https://github.com/tc39/proposal-import-attributes) to add the ability to import arbitrary bytes in a common way across JavaScript environments.
 
-      > Each TC39 proposal should have a `README.md` file which explains the purpose
-      > of the proposal and its shape at a high level.
-      >
-      > ...
-      >
-      > The rest of this page can be used as a template ...
+Developers will then be able to import bytes as follows:
 
-      Your explainer can point readers to the `index.html` generated from `spec.emu`
-      via markdown like
+```js
+import bytes from "./photo.png" with { type: "bytes" };
+import("photo.png", { with: { type: "bytes" } });
+```
 
-      ```markdown
-      You can browse the [ecmarkup output](https://ACCOUNT.github.io/PROJECT/)
-      or browse the [source](https://github.com/ACCOUNT/PROJECT/blob/HEAD/spec.emu).
-      ```
+Note: a similar proposal was mentioned in https://github.com/whatwg/html/issues/9444
 
-      where *ACCOUNT* and *PROJECT* are the first two path elements in your project's Github URL.
-      For example, for github.com/**tc39**/**template-for-proposals**, *ACCOUNT* is “tc39”
-      and *PROJECT* is “template-for-proposals”.
+## Motivation
 
+In a similar manner to why JSON modules are useful, importing raw bytes is useful to extend this behavior to all files. This provides an isomorphic way to read a file, regardless of the JavaScript environment. 
 
-## Maintain your proposal repo
+For example, a developer may want to read a `.png` file to process an image or `.woff` to process a font and pass the bytes into using isomorphic tools like [satori](https://github.com/vercel/satori).
 
-  1. Make your changes to `spec.emu` (ecmarkup uses HTML syntax, but is not HTML, so I strongly suggest not naming it “.html”)
-  1. Any commit that makes meaningful changes to the spec, should run `npm run build` to verify that the build will succeed and the output looks as expected.
-  1. Whenever you update `ecmarkup`, run `npm run build` to verify that the build will succeed and the output looks as expected.
+Today, the developer must detect the platform in order to read the bytes.
 
-  [explainer]: https://github.com/tc39/how-we-work/blob/HEAD/explainer.md
+```js
+async function getBytes(path) {
+  if (typeof Deno !== "undefined") {
+    const bytes = await Deno.readFile(path);
+    return bytes;
+  }
+  if (typeof Bun !== "undefined") {
+    const bytes = await Bun.file(path).bytes();
+    return bytes;
+  }
+  if (typeof require !== "undefined") {
+    const fs = require("fs/promises");
+    const bytes = await fs.readFile(path);
+    return bytes;
+  }
+  if (typeof window !== "undefined") {
+    const response = await fetch(path);
+    const bytes = await response.bytes();
+    return bytes;
+  }
+  throw new Error("Unsupported runtime");
+}
+
+const bytes = await getBytes("./photo.png");
+```
+
+We can maximize portability and reduce boilerplate by turning this into a single line of code:
+
+```js
+import bytes from "./photo.png" with { type: "bytes" };
+```
+
+Using an import also provides opportunity for further optimizations when using a bundler. For example, bundlers can statically analyze this import and inline as base64.
+
+```js
+const bytes = Uint8Array.fromBase64("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=")
+```
+
+## Proposed semantics and interoperability
+
+If a module import has an attribute with key `type` and value `bytes`, the host is required to either fail the import, or treat it as a Uint8Array. The Uint8Array object is the default export of the module (which has no named exports).
+
+In browser environments, this will be equivalent to `fetch()` such that `sec-fetch-dest` will be empty. The response `content-type` will be ignored.
+
+In "local" desktop/server/embedded, this will be equivalent to a file read. The file extension will be ignored.
+
+All of the import statements in the module graph that address the same module will evaluate to the same mutable Uint8Array object.
+
+## FAQ
+
+### How would this proposal work with caching?
+
+The determination of whether the `type` attribute is part of the module cache key is left up to hosts (as it is for all import attributes).
+
+### Is there any prior art?
+
+Deno 2.4 added support in [July 2025](https://deno.com/blog/v2.4).
+
+```js
+import imageBytes from "./image.png" with { type: "bytes" };
+```
+
+Bun 1.1.5 added a similar feature in [April 2024](https://bun.sh/blog/bun-v1.1.5).
+
+```js
+import html from "./index.html" with { type: "text" };
+```
