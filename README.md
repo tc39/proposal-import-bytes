@@ -94,3 +94,17 @@ Bun 1.1.5 added a similar feature in [April 2024](https://bun.sh/blog/bun-v1.1.5
 ```js
 import html from "./index.html" with { type: "text" };
 ```
+
+### What about ArrayBuffer vs Uint8Array?
+
+Both are viable solutions. Uint8Array matches the [Response.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes) method return type as well as [Deno's implementation](https://deno.com/blog/v2.4#importing-text-and-bytes). Uint8Array is also compatible with [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer) which makes it widely compatible with existing JavaScript code.
+
+### What about Blob vs Uint8Array?
+
+Blob is part of the W3C [File API](https://www.w3.org/TR/FileAPI/), not part of JavaScript so it is not a viable solution to include in a TC39 Proposal. Blob also includes a type and is immutable.
+
+### What about mutable vs immutable?
+
+Both are viable solutions. Mutable would match the behavior of existing imports from [roposal-import-attributes](https://github.com/tc39/proposal-import-attributes) but there is still a possibility of making `bytes` default to immutable given the [proposal-immutable-arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer).
+
+Ideally there would be a separate proposal for a new `immutable` attribute.
