@@ -95,6 +95,13 @@ Bun 1.1.5 added a similar feature in [April 2024](https://bun.sh/blog/bun-v1.1.5
 import html from "./index.html" with { type: "text" };
 ```
 
+Webpack has [asset modules](https://webpack.js.org/guides/asset-modules/) to inline a data URI via [url-loader](https://www.npmjs.com/package/url-loader) and now `asset/inline`.
+
+```js
+import logo from './images/logo.svg';
+block.style.background = url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDo...vc3ZnPgo=)
+```
+
 ### What about ArrayBuffer vs Uint8Array?
 
 Both are viable solutions. Uint8Array matches the [Response.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes) method return type as well as [Deno's implementation](https://deno.com/blog/v2.4#importing-text-and-bytes). Uint8Array is also compatible with [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer) which makes it widely compatible with existing JavaScript code.
