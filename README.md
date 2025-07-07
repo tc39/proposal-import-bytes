@@ -83,23 +83,34 @@ The determination of whether the `type` attribute is part of the module cache ke
 
 ### Is there any prior art?
 
-Deno 2.4 added support in [July 2025](https://deno.com/blog/v2.4).
+Deno 2.4 added support in [July 2025](https://deno.com/blog/v2.4) to inline a Uint8Array
 
 ```js
 import imageBytes from "./image.png" with { type: "bytes" };
 ```
 
-Bun 1.1.5 added a similar feature in [April 2024](https://bun.sh/blog/bun-v1.1.5).
+Bun 1.1.7 added a similar feature in [May 2024](https://bun.sh/blog/bun-v1.1.7) to inline a string of text
 
 ```js
 import html from "./index.html" with { type: "text" };
 ```
 
-Webpack has [asset modules](https://webpack.js.org/guides/asset-modules/) to inline a data URI via [url-loader](https://www.npmjs.com/package/url-loader) and now `asset/inline`.
+webpack added [asset modules](https://webpack.js.org/guides/asset-modules/) to inline a base64 data URI via [url-loader](https://www.npmjs.com/package/url-loader) in 4.x and now `asset/inline` in 5.x
 
 ```js
-import logo from './images/logo.svg';
-block.style.background = url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDo...vc3ZnPgo=)
+import logo from "./images/logo.svg"
+```
+
+esbuild added a [binary loader](https://esbuild.github.io/content-types/#binary) to inline a Uint8Array
+
+```js
+import uint8array from "./example.data"
+```
+
+Parcel added a [data url](https://parceljs.org/features/bundle-inlining/#inlining-as-a-data-url) scheme to inline a base64 data URI
+
+```js
+import background from "data-url:./background.png";
 ```
 
 ### What about ArrayBuffer vs Uint8Array?
