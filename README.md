@@ -123,6 +123,6 @@ Blob is part of the W3C [File API](https://www.w3.org/TR/FileAPI/), not part of 
 
 ### What about mutable vs immutable?
 
-Both are viable solutions. Mutable would match the behavior of existing imports from [roposal-import-attributes](https://github.com/tc39/proposal-import-attributes) but there is still a possibility of making `bytes` default to immutable given the [proposal-immutable-arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer).
+Both are viable solutions. Mutable would match the behavior of existing imports from [import attributes proposal](https://github.com/tc39/proposal-import-attributes) but there is still a possibility of making `bytes` default to immutable given the [proposal-immutable-arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer).
 
 Ideally there would be a separate proposal for a new `immutable` attribute.
