@@ -113,9 +113,17 @@ Parcel added a [data url](https://parceljs.org/features/bundle-inlining/#inlinin
 import background from "data-url:./background.png";
 ```
 
+Moddable added a [Resource](https://www.moddable.com/documentation/files/files#resource) class to inline a host buffer for embedded systems
+
+```js
+let resource = new Resource("logo.bmp");
+```
+
 ### What about ArrayBuffer vs Uint8Array?
 
 Both are viable solutions. Uint8Array matches the [Response.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes) method return type as well as [Deno's implementation](https://deno.com/blog/v2.4#importing-text-and-bytes). Uint8Array is also compatible with [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer) which makes it widely compatible with existing JavaScript code.
+
+This is currently being discussed in https://github.com/styfle/proposal-import-bytes/issues/5
 
 ### What about Blob vs Uint8Array?
 
