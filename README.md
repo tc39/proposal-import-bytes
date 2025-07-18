@@ -145,5 +145,10 @@ See discussion in Issue https://github.com/styfle/proposal-import-bytes/issues/5
 
 ### Why not Blob?
 
-Blob is part of the W3C [File API](https://www.w3.org/TR/FileAPI/), not part of JavaScript so it is not a viable solution to include in a TC39 Proposal.
+Blob is part of the W3C [File API](https://www.w3.org/TR/FileAPI/), not part of JavaScript, so it is not a viable solution to include in a TC39 Proposal. Furthermore, Blob typically includes a MIME Type but this proposal ignores the type. 
 
+### Why not ReableStream?
+
+ReadableStream is part of the WHATWG [Streams](https://streams.spec.whatwg.org), bot part of JavaScript, so it is not a viable solution to include in a TC39 Proposal. Furthermore, there is [no helper method](https://github.com/whatwg/streams/issues/1019) to turn a stream into a buffer so this won't solve the original motivation of writing isomorphic JavaScript.
+
+See discussion in Issue https://github.com/styfle/proposal-import-buffer/issues/3
