@@ -81,6 +81,12 @@ All of the import statements in the module graph that address the same module wi
 
 The determination of whether the `type` attribute is part of the module cache key is left up to hosts (as it is for all import attributes).
 
+For example, `import "foo"` and `import "foo" with { type: "buffer" }` may return the same module in one host, and different modules with another host. Both are valid implementations.
+
+However, a dynamic import and a static import with the same `type` will return the same module, regardless of host.
+
+See discussion in Issue https://github.com/styfle/proposal-import-bytes/issues/4
+
 ### Is there any prior art?
 
 Deno 2.4 added support in [July 2025](https://deno.com/blog/v2.4) to inline a Uint8Array
