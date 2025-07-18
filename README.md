@@ -1,79 +1,79 @@
-# Proposal Import Bytes
+# Proposal Import Buffer
 
-Champions: Steven ([@styfle](https://github.com/styfle))
+Champions: [@styfle](https://github.com/styfle)
 
 Status: Stage 0.
 
-Please leave any feedback you have in the [issues](https://github.com/styfle/proposal-import-bytes/issues)!
+Please leave any feedback in the [issues](https://github.com/styfle/proposal-import-bytes/issues), thanks!
 
 ## Synopsis
 
-This proposal is buit on top of the the [import attributes proposal](https://github.com/tc39/proposal-import-attributes) to add the ability to import arbitrary bytes in a common way across JavaScript environments.
+This proposal is buit on top of [import attributes](https://github.com/tc39/proposal-import-attributes) and [immutable arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer) to add the ability to import arbitrary bytes in a common way across JavaScript environments.
 
-Developers will then be able to import bytes as follows:
+Developers will then be able to import the buffer as follows:
 
 ```js
-import bytes from "./photo.png" with { type: "bytes" };
-import("photo.png", { with: { type: "bytes" } });
+import buffer from "./photo.png" with { type: "buffer" };
+import("photo.png", { with: { type: "buffer" } });
 ```
 
 Note: a similar proposal was mentioned in https://github.com/whatwg/html/issues/9444
 
 ## Motivation
 
-In a similar manner to why JSON modules are useful, importing raw bytes is useful to extend this behavior to all files. This provides an isomorphic way to read a file, regardless of the JavaScript environment. 
+In a similar manner to why JSON modules are useful, importing raw bytes is useful to extend this behavior to all files. This proposal provides an isomorphic way to read a file, regardless of the JavaScript environment. 
 
-For example, a developer may want to read a `.png` file to process an image or `.woff` to process a font and pass the bytes into using isomorphic tools like [satori](https://github.com/vercel/satori).
+For example, a developer may want to read a `.png` file to process an image or `.woff` to process a font and pass the buffer into isomorphic tools like [satori](https://github.com/vercel/satori).
 
-Today, the developer must detect the platform in order to read the bytes.
+Today, the developer must detect the platform in order to read the buffer.
 
 ```js
-async function getBytes(path) {
+async function getBuffer(path) {
   if (typeof Deno !== "undefined") {
-    const bytes = await Deno.readFile(path);
-    return bytes;
+    const result = await Deno.readFile(path);
+    return result.buffer;
   }
   if (typeof Bun !== "undefined") {
-    const bytes = await Bun.file(path).bytes();
-    return bytes;
+    const buffer = await Bun.file(path).arrayBuffer();
+    return buffer;
   }
   if (typeof require !== "undefined") {
     const fs = require("fs/promises");
-    const bytes = await fs.readFile(path);
-    return bytes;
+    const result = await fs.readFile(path);
+    return result.buffer;
   }
   if (typeof window !== "undefined") {
     const response = await fetch(path);
-    const bytes = await response.bytes();
-    return bytes;
+    const buffer = await response.arrayBuffer();
+    return buffer;
   }
   throw new Error("Unsupported runtime");
 }
 
-const bytes = await getBytes("./photo.png");
+const buffer = await getBuffer("./photo.png");
 ```
 
 We can maximize portability and reduce boilerplate by turning this into a single line of code:
 
 ```js
-import bytes from "./photo.png" with { type: "bytes" };
+import buffer from "./photo.png" with { type: "buffer" };
 ```
 
 Using an import also provides opportunity for further optimizations when using a bundler. For example, bundlers can statically analyze this import and inline as base64.
 
 ```js
-const bytes = Uint8Array.fromBase64("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=")
+const buffer = Uint8Array.fromBase64("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=").buffer.transferToImmutable()
 ```
 
 ## Proposed semantics and interoperability
 
-If a module import has an attribute with key `type` and value `bytes`, the host is required to either fail the import, or treat it as a Uint8Array. The Uint8Array object is the default export of the module (which has no named exports).
+If a module import has an attribute with key `type` and value `buffer`, the host is required to either fail the import, or treat it as an immutable ArrayBuffer. The ArrayBuffer object is the default export of the module (which has no named exports).
 
 In browser environments, this will be equivalent to `fetch()` such that `sec-fetch-dest` will be empty. The response `content-type` will be ignored.
 
 In "local" desktop/server/embedded, this will be equivalent to a file read. The file extension will be ignored.
 
-All of the import statements in the module graph that address the same module will evaluate to the same mutable Uint8Array object.
+All of the import statements in the module graph that address the same module will evaluate to the same immutable ArrayBuffer object.
 
 ## FAQ
 
@@ -119,18 +119,25 @@ Moddable added a [Resource](https://www.moddable.com/documentation/files/files#r
 let resource = new Resource("logo.bmp");
 ```
 
-### What about ArrayBuffer vs Uint8Array?
+### Why not mutable?
 
-Both are viable solutions. Uint8Array matches the [Response.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes) method return type as well as [Deno's implementation](https://deno.com/blog/v2.4#importing-text-and-bytes). Uint8Array is also compatible with [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer) which makes it widely compatible with existing JavaScript code.
+Mutable can be problematic for several reasons:
 
-This is currently being discussed in https://github.com/styfle/proposal-import-bytes/issues/5
+- may need multiple copies of the buffer in memory to avoid different underlying bytes for `import(specifier, { type: "json" })` and `import(specifier, { type: "buffer" })`
+- may cause unexpected behavior when multiple modules import the same buffer and detach (say `postMessage()` or `transferToImmutable()`) in one module which would cause it to become detached in the other module too
+- may cause excessive RAM usage for embedded system (immutable could use ROM instead)
+- may cause excessive memory when tracking source maps
+- may cause an undeniable global communication channel
 
-### What about Blob vs Uint8Array?
+See discussion in Issue https://github.com/styfle/proposal-import-bytes/issues/2 and https://github.com/styfle/proposal-import-bytes/issues/5 
 
-Blob is part of the W3C [File API](https://www.w3.org/TR/FileAPI/), not part of JavaScript so it is not a viable solution to include in a TC39 Proposal. Blob also includes a type and is immutable.
+### Why not Uint8Array?
 
-### What about mutable vs immutable?
+Uint8Array is one array-like view of an underlying ArrayBuffer, but there are many views (see TypedArray) because there are many different ways that one might want to access the content of the buffer.
 
-Both are viable solutions. Mutable would match the behavior of existing imports from [import attributes proposal](https://github.com/tc39/proposal-import-attributes) but there is still a possibility of making `bytes` default to immutable given the [proposal-immutable-arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer).
+See discussion in Issue https://github.com/styfle/proposal-import-bytes/issues/5
 
-Ideally there would be a separate proposal for a new `immutable` attribute.
+### Why not Blob?
+
+Blob is part of the W3C [File API](https://www.w3.org/TR/FileAPI/), not part of JavaScript so it is not a viable solution to include in a TC39 Proposal.
+
