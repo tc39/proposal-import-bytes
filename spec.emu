@@ -56,7 +56,7 @@ contributors: Steven
         </ul>
         <p>then it must perform FinishLoadingImportedModule(_referrer_, _moduleRequest_, _payload_, _result_) with the same _result_ each time.</p>
       </li>
-      <li><p><del>If _moduleRequest_.[[Attributes]] has an entry _entry_ such that _entry_.[[Key]] is *"type"* and _entry_.[[Value]] is *"json"*, the host environment must perform FinishLoadingImportedModule(_referrer_, _moduleRequest_, _payload_, _result_), where _result_ is either the Completion Record returned by an invokation of ParseJSONModule or a throw completion.</del></p>
+      <li><p><del>If _moduleRequest_.[[Attributes]] has an entry _entry_ such that _entry_.[[Key]] is *"type"* and _entry_.[[Value]] is *"json"*, the host environment must perform FinishLoadingImportedModule(_referrer_, _moduleRequest_, _payload_, _result_), where _result_ is either the Completion Record returned by an invokation of ParseJSONModule or a throw completion.</del></p></li>
       <li><p><ins>If _moduleRequest_.[[Attributes]] has an entry _entry_ such that _entry_.[[Key]] is *"type"*, then</ins></p></li>
       <ol>
         <li><p><ins>Let _type_ be _entry_.[[Value]].</ins></p></li>
