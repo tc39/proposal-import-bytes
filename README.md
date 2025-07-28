@@ -2,6 +2,8 @@
 
 Champions: [@styfle](https://github.com/styfle)
 
+Author(s): [@styfle](https://github.com/styfle), Guy Bedford
+
 Status: Stage 0.
 
 Please leave any feedback in the [issues](https://github.com/styfle/proposal-import-bytes/issues), thanks!
