@@ -115,7 +115,7 @@ contributors: Steven
         <ins>
           CreateBufferModule (
             _arrayBuffer_: an immutable ArrayBuffer or a SharedArrayBuffer
-          ): either a normal completion containing a Synthetic Module Record, or a throw completion
+          ): a Synthetic Module Record
         </ins>
       </h1>
       <dl class="header">
