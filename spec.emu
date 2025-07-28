@@ -61,7 +61,7 @@ contributors: Steven, Guy Bedford
       <ol>
         <li><p><ins>Let _type_ be _entry_.[[Value]].</ins></p></li>
         <li><p><ins>If _type_ is *"json"*, the host environment must perform FinishLoadingImportedModule(_referrer_, _moduleRequest_, _payload_, _result_), where _result_ is either the Completion Record returned by an invokation of ParseJSONModule or a throw completion.</ins></p></li>
-        <li><p><ins>If _type_ is *"buffer"*, the host environment must perform FinishLoadingImportedModule(_referrer_, _moduleRequest_, _payload_, _result_), where _result_ is either the Completion Record returned by an invokation of CreteBufferModule or a throw completion.</ins></p></li>
+        <li><p><ins>If _type_ is *"buffer"*, the host environment must perform FinishLoadingImportedModule(_referrer_, _moduleRequest_, _payload_, _result_), where _result_ is either the Completion Record returned by an invokation of CreateBufferModule or a throw completion.</ins></p></li>
       </ol>
       <li>
         The operation must treat _payload_ as an opaque value to be passed through to FinishLoadingImportedModule.
