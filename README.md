@@ -141,6 +141,10 @@ Mutable can be problematic for several reasons:
 
 See discussion in Issue https://github.com/styfle/proposal-import-bytes/issues/2 and https://github.com/styfle/proposal-import-bytes/issues/5 
 
+### Why Uint8Array?
+
+Uint8Array is compatible with [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer) which makes it widely compatible with existing JavaScript code.
+
 ### Why not ArrayBuffer?
 
 ArrayBuffers cannot be read from directly; the developer must create a view, such as a Uint8Array, to read data. Providing a Uint8Array avoids that additional effort.
@@ -158,3 +162,7 @@ Blob is part of the W3C [File API](https://www.w3.org/TR/FileAPI/), not part of 
 ReadableStream is part of the WHATWG [Streams](https://streams.spec.whatwg.org), not part of JavaScript, so it is not a viable solution to include in a TC39 Proposal. Furthermore, there is [no helper method](https://github.com/whatwg/streams/issues/1019) to turn a stream into a buffer so this won't solve the original motivation of writing isomorphic JavaScript.
 
 See discussion in Issue https://github.com/styfle/proposal-import-bytes/issues/3
+
+### Why `type: bytes`?
+
+The `bytes()` method is familiar to those using [Response.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes) or newer [Blob.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Blob/bytes) which both return Uint8Array.
