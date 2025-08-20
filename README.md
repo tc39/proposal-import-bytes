@@ -174,4 +174,4 @@ See discussion in Issue https://github.com/tc39/proposal-import-bytes/issues/16
 
 ### Why `type: bytes`?
 
-The `bytes()` method is familiar to those using [Response.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes) or newer [Blob.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Blob/bytes) which both return Uint8Array.
+The "bytes" name will be familiar to developers who are already using [Response.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes) as well as [Blob.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Blob/bytes) which both return `Uint8Array`.
