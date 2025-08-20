@@ -163,6 +163,15 @@ ReadableStream is part of the WHATWG [Streams](https://streams.spec.whatwg.org),
 
 See discussion in Issue https://github.com/styfle/proposal-import-bytes/issues/3
 
+### Why not a phase?
+
+This proposal does not attempt to introduce a new phase like the [source](https://github.com/tc39/proposal-source-phase-imports) or [asset](https://github.com/tc39/proposal-asset-references) proposals.
+
+* A new phase would require a syntax change to JavaScript
+* A new phase would cause `Sec-Fetch-Dest` to be script instead of empty
+
+See discussion in Issue https://github.com/tc39/proposal-import-bytes/issues/16
+
 ### Why `type: bytes`?
 
 The `bytes()` method is familiar to those using [Response.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes) or newer [Blob.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Blob/bytes) which both return Uint8Array.
