@@ -16,7 +16,7 @@ Developers will then be able to import the bytes as follows:
 
 ```js
 import bytes from "./photo.png" with { type: "bytes" };
-import("./photo.png", { with: { type: "bytes" } });
+const bytes = import("./photo.png", { with: { type: "bytes" } });
 ```
 
 The bytes are returned as a `Uint8Array` backed by an [immutable arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer).
