@@ -167,11 +167,12 @@ See discussion in Issue https://github.com/styfle/proposal-import-bytes/issues/3
 
 This proposal does not attempt to introduce a new phase like the [source](https://github.com/tc39/proposal-source-phase-imports) or [asset](https://github.com/tc39/proposal-asset-references) proposals.
 
-* A new phase would require a syntax change to JavaScript
-* A new phase would cause `Sec-Fetch-Dest` to be script instead of empty
+A new phase would require a syntax change to JavaScript and cause `Sec-Fetch-Dest` to be script instead of empty. It also introduces security implications since importing arbitrary code could be malicious.
 
 See discussion in Issue https://github.com/tc39/proposal-import-bytes/issues/16
 
 ### Why `type: bytes`?
 
-The "bytes" name will be familiar to developers who are already using [Response.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes) as well as [Blob.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Blob/bytes) which both return `Uint8Array`.
+The `type` attribute is proposed the same reason that it was introduced with `type: json`: to separate from code loading and provide a different `Sec-Fetch-Dest`.
+
+The `type: bytes` name will be familiar to developers who are already using [Response.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes) as well as [Blob.bytes()](https://developer.mozilla.org/en-US/docs/Web/API/Blob/bytes) which both return `Uint8Array`.
