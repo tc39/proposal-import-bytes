@@ -125,7 +125,7 @@ contributors: Steven, Guy Bedford
 
       <emu-alg>
         1. Assert: IsImmutableBuffer(_arrayBuffer_) is *true*.
-        1. Let _uint8Array_ be ? Construct(%Uint8Array%, « _arrayBuffer_ »).
+        1. Let _uint8Array_ be ! Construct(%Uint8Array%, « _arrayBuffer_ »).
         1. Return CreateDefaultExportSyntheticModule(_uint8Array_).
       </emu-alg>
     </emu-clause>
