@@ -115,7 +115,7 @@ contributors: Steven, Guy Bedford
         <ins>
           CreateBytesModule (
             _arrayBuffer_: an immutable ArrayBuffer or a SharedArrayBuffer
-          ): either a normal completion containing a Synthetic Module Record or an abrupt completion
+          ): a Synthetic Module Record
         </ins>
       </h1>
       <dl class="header">
