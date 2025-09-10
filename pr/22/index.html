@@ -4027,7 +4027,7 @@ p.ECMAaddress {
 </head><body><details class="annoying-warning">
   <summary>PR #22</summary>
   <p>
-    This document is a preview of merging <a href="https://github.com/tc39/proposal-import-bytes/pull/22">PR #22</a> as commit <a href="https://github.com/tc39/proposal-import-bytes/commit/698afdcc02178c8e5898aee5ed6f6d0666582622"><code>698afdcc02178c8e5898aee5ed6f6d0666582622</code></a>.
+    This document is a preview of merging <a href="https://github.com/tc39/proposal-import-bytes/pull/22">PR #22</a> as commit <a href="https://github.com/tc39/proposal-import-bytes/commit/5a955528e5e12be2a0895b8b9c2760f1cfb8375d"><code>5a955528e5e12be2a0895b8b9c2760f1cfb8375d</code></a>.
   </p>
   <p>
     Do not reference it as authoritative in any way.
@@ -4153,7 +4153,7 @@ p.ECMAaddress {
 
     <emu-clause id="sec-create-bytes-module" type="abstract operation" aoid="CreateBytesModule">
       <h1><span class="secnum">1.2.1</span> <ins>CreateBytesModule ( <var>arrayBuffer</var> )</ins></h1>
-      <p>The abstract operation CreateBytesModule takes argument <var>arrayBuffer</var> (an immutable ArrayBuffer or a SharedArrayBuffer) and returns either a <emu-xref href="#sec-completion-record-specification-type"><a href="https://tc39.es/ecma262/#sec-completion-record-specification-type">normal completion containing</a></emu-xref> a <emu-xref href="#sec-synthetic-module-records" id="_ref_4"><a href="#sec-synthetic-module-records">Synthetic Module Record</a></emu-xref> or an <emu-xref href="#sec-completion-record-specification-type"><a href="https://tc39.es/ecma262/#sec-completion-record-specification-type">abrupt completion</a></emu-xref>. It performs the following steps when called:</p>
+      <p>The abstract operation CreateBytesModule takes argument <var>arrayBuffer</var> (an immutable ArrayBuffer or a SharedArrayBuffer) and returns a <emu-xref href="#sec-synthetic-module-records" id="_ref_4"><a href="#sec-synthetic-module-records">Synthetic Module Record</a></emu-xref>. It performs the following steps when called:</p>
 
       <emu-alg><ol><li><emu-xref href="#assert"><a href="https://tc39.es/ecma262/#assert">Assert</a></emu-xref>: IsImmutableBuffer(<var>arrayBuffer</var>) is <emu-val>true</emu-val>.</li><li>Let <var>uint8Array</var> be !&nbsp;<emu-xref aoid="Construct"><a href="https://tc39.es/ecma262/#sec-construct">Construct</a></emu-xref>(<emu-xref href="#sec-typedarray-objects"><a href="https://tc39.es/ecma262/#sec-typedarray-objects">%Uint8Array%</a></emu-xref>, « <var>arrayBuffer</var>&nbsp;»).</li><li>Return <emu-xref aoid="CreateDefaultExportSyntheticModule"><a href="https://tc39.es/ecma262/#sec-create-default-export-synthetic-module">CreateDefaultExportSyntheticModule</a></emu-xref>(<var>uint8Array</var>).</li></ol></emu-alg>
     </emu-clause>
