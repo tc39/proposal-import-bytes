@@ -60,8 +60,8 @@ contributors: Steven, Guy Bedford
       <li><p><ins>If _moduleRequest_.[[Attributes]] has an entry _entry_ such that _entry_.[[Key]] is *"type"*, then</ins></p></li>
       <ol>
         <li><p><ins>Let _type_ be _entry_.[[Value]].</ins></p></li>
-        <li><p><ins>If _type_ is *"json"*, the host environment must perform FinishLoadingImportedModule(_referrer_, _moduleRequest_, _payload_, _result_), where _result_ is either the Completion Record returned by an invokation of ParseJSONModule or a throw completion.</ins></p></li>
-        <li><p><ins>If _type_ is *"bytes"*, the host environment must perform FinishLoadingImportedModule(_referrer_, _moduleRequest_, _payload_, _result_), where _result_ is either the Completion Record returned by an invokation of CreateBytesModule or a throw completion.</ins></p></li>
+        <li><p><ins>If _type_ is *"json"*, the host environment must perform FinishLoadingImportedModule(_referrer_, _moduleRequest_, _payload_, _result_), where _result_ is either the Completion Record returned by an invocation of ParseJSONModule or a throw completion.</ins></p></li>
+        <li><p><ins>If _type_ is *"bytes"*, the host environment must perform FinishLoadingImportedModule(_referrer_, _moduleRequest_, _payload_, _result_), where _result_ is either the Completion Record returned by an invocation of CreateBytesModule or a throw completion.</ins></p></li>
       </ol>
       <li>
         The operation must treat _payload_ as an opaque value to be passed through to FinishLoadingImportedModule.
@@ -125,7 +125,8 @@ contributors: Steven, Guy Bedford
 
       <emu-alg>
         1. Assert: IsImmutableBuffer(_arrayBuffer_) is *true*.
-        1. Return CreateDefaultExportSyntheticModule(_arrayBuffer_).
+        1. Let _uint8Array_ be ! Construct(%Uint8Array%, « _arrayBuffer_ »).
+        1. Return CreateDefaultExportSyntheticModule(_uint8Array_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
