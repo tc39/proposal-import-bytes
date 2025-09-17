@@ -5,7 +5,7 @@
 <script src="./spec.js"></script>
 <pre class="metadata">
 title: Proposal Import Bytes
-stage: 0
+stage: 2
 contributors: Steven, Guy Bedford
 </pre>
 <emu-intro id="intro">
