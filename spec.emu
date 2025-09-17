@@ -75,7 +75,7 @@ contributors: Steven, Guy Bedford
     </emu-note>
 
     <emu-note>
-      <p>All of the import statements in the module graph that address the same JSON <ins>or bytes </ins>module may evaluate to the same mutable object.</p>
+      <p>All of the import statements in the module graph that address the same JSON <ins>or bytes </ins>module may evaluate to the same <del>mutable </del>object.</p>
     </emu-note>
   </emu-clause>
 
@@ -114,7 +114,7 @@ contributors: Steven, Guy Bedford
       <h1>
         <ins>
           CreateBytesModule (
-            _arrayBuffer_: an immutable ArrayBuffer or a SharedArrayBuffer
+            _arrayBuffer_: an immutable ArrayBuffer or an immutable SharedArrayBuffer
           ): a Synthetic Module Record
         </ins>
       </h1>
