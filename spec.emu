@@ -114,7 +114,7 @@ contributors: Steven, Guy Bedford
       <h1>
         <ins>
           CreateBytesModule (
-            _arrayBuffer_: an immutable ArrayBuffer or an immutable SharedArrayBuffer
+            _arrayBuffer_: an immutable ArrayBuffer
           ): a Synthetic Module Record
         </ins>
       </h1>
