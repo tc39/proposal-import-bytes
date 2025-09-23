@@ -1,16 +1,16 @@
 # Import Bytes
 
-Champions: [@styfle](https://github.com/styfle)
+A modest proposal for importing bytes in JavaScript.
 
-Author(s): [@styfle](https://github.com/styfle), Guy Bedford
+## Status
 
-Status: Stage 2.
-
-Please leave any feedback in the [issues](https://github.com/styfle/proposal-import-bytes/issues), thanks!
+- Champions: [@styfle](https://github.com/styfle)
+- Authors: [@styfle](https://github.com/styfle), [@guybedford](https://github.com/guybedford)
+- Status: [Stage 2.7](https://tc39.es/process-document/)
 
 ## Synopsis
 
-This proposal is buit on top of [import attributes](https://github.com/tc39/proposal-import-attributes) and [immutable arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer) to add the ability to import arbitrary bytes in a common way across JavaScript environments.
+This proposal is buit on top of [import attributes](https://github.com/tc39/proposal-import-attributes) and [immutable arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer) to add the ability to import arbitrary bytes with a common syntax across JavaScript environments.
 
 Developers will then be able to import the bytes as follows:
 
