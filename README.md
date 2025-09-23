@@ -16,7 +16,7 @@ Developers will then be able to import the bytes as follows:
 
 ```js
 import bytes from "./photo.png" with { type: "bytes" };
-const bytes = import("./photo.png", { with: { type: "bytes" } });
+const bytes = await import("./photo.png", { with: { type: "bytes" } });
 ```
 
 The bytes are returned as a `Uint8Array` backed by an [immutable arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer).
@@ -25,7 +25,7 @@ Note: a similar proposal was mentioned in https://github.com/whatwg/html/issues/
 
 ## Motivation
 
-In a similar manner to why JSON modules are useful, importing raw bytes is useful to extend this behavior to all files. This proposal provides an isomorphic way to read a file, regardless of the JavaScript environment. 
+In a similar manner to why JSON modules are useful, importing raw bytes is useful to extend this behavior to all files. This proposal provides an isomorphic way to read a file synchronously or asynchronously, regardless of the JavaScript environment. 
 
 For example, a developer may want to read a `.png` file to process an image or `.woff` to process a font and pass the bytes into isomorphic tools like [satori](https://github.com/vercel/satori).
 
