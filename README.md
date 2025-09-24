@@ -10,7 +10,7 @@ A modest proposal for importing bytes in JavaScript.
 
 ## Synopsis
 
-This proposal is buit on top of [import attributes](https://github.com/tc39/proposal-import-attributes) and [immutable arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer) to add the ability to import arbitrary bytes with a common syntax across JavaScript environments.
+This proposal is built on top of [import attributes](https://github.com/tc39/proposal-import-attributes) and [immutable arraybuffer](https://github.com/tc39/proposal-immutable-arraybuffer) to add the ability to import arbitrary bytes with a common syntax across JavaScript environments.
 
 Developers will then be able to import the bytes as follows:
 
