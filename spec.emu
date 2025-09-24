@@ -12,7 +12,7 @@ contributors: Steven, Guy Bedford
   <h1>Proposal Import Bytes</h1>
   <p>See <a href="https://github.com/styfle/proposal-import-bytes/blob/main/README.md">the explainer</a> for information.</p>
   <emu-note type="editor">
-    <p>This proposal is buit on top of the <a href="https://github.com/tc39/proposal-json-modules">JSON Modules</a> and <a href="https://github.com/tc39/proposal-immutable-arraybuffer">Immutable Array Buffer</a> proposals.</p>
+    <p>This proposal is built on top of the <a href="https://github.com/tc39/proposal-json-modules">JSON Modules</a> and <a href="https://github.com/tc39/proposal-immutable-arraybuffer">Immutable Array Buffer</a> proposals.</p>
   </emu-note>
 </emu-intro>
 
