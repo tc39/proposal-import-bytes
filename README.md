@@ -73,7 +73,7 @@ const bytes = Uint8Array.fromBase64("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAw
 
 If a module import has an attribute with key `type` and value `bytes`, the host is required to either fail the import, or treat it as a Uint8Array backed by an immutable ArrayBuffer. The Uint8Array object is the default export of the module (which has no named exports).
 
-In browser environments, this will be equivalent to `fetch()` such that `sec-fetch-dest` will be empty. The response `content-type` will be ignored.
+In browser environments, the request will include headers `Accept: */*` and `Sec-Fetch-Dest: bytes`. The response `Content-Type` header will be ignored.
 
 In "local" desktop/server/embedded, this will be equivalent to a file read. The file extension will be ignored.
 
@@ -167,7 +167,7 @@ See discussion in Issue https://github.com/styfle/proposal-import-bytes/issues/3
 
 This proposal does not attempt to introduce a new phase like the [source](https://github.com/tc39/proposal-source-phase-imports) or [asset](https://github.com/tc39/proposal-asset-references) proposals.
 
-A new phase would require a syntax change to JavaScript and cause `Sec-Fetch-Dest` to be script instead of empty. It also introduces security implications since importing arbitrary code could be malicious.
+A new phase would require a syntax change to JavaScript and cause `Sec-Fetch-Dest: script` instead of `bytes`. It also introduces security implications since importing arbitrary code could be malicious.
 
 See discussion in Issue https://github.com/tc39/proposal-import-bytes/issues/16
 
